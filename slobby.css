@@ -1,0 +1,60 @@
+body {
+   
+    font-family: Arial, sans-serif;
+    background-color: rgb(126, 65, 161);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+.game {
+    background-image: url(''); /* Substitua pelo caminho da sua imagem */
+    background-size: cover;
+    background-position: center;
+    color: azure;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 10px;
+    text-align: center;
+    width: 250px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s;
+    text-decoration: none; 
+    display: block; 
+}
+
+.game:hover {
+    transform: scale(1.05);
+}
+
+#game1 {
+    background-color: rgb(196, 29, 84);
+    background-image: url('quiz2.0.png'); 
+    background-size: 230px;
+}
+
+#game2 {
+    background-color: purple;
+    background-image: url('quebracabeça-removebg-preview.png'); 
+    background-size: 230px;
+}
+#game3 {
+    background-color: violet;
+    background-image: url('caça2-removebg-preview.png'); 
+    background-size: 150px;
+}
+footer {
+    
+    position: absolute;
+    bottom: 0;
+    color: rgb(170, 170, 170);
+    text-align: center;
+    opacity: 0.5;
+    padding: 10px;
+
+}
+
+

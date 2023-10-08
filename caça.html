@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Caça-palavras</title>
+   
+</head>
+<style>
+	 
+	h1{
+		color:rgb(0, 0, 0);
+		font-size:90px;
+	}
+	h2{
+		color:#ffffff;
+		font-size:60px;
+	}
+	h1, h2{
+		text-align:center;
+	}
+	p{
+		font-size:25px;
+		margin:0;
+	}
+
+	#dicas{
+		overflow-y:scroll;
+		height:90%;
+		width:20%;
+		text-align: justify;
+		padding:1% 1% 2% 3%;
+		font-size:1.2em;
+		position:fixed;
+		margin:0 0 0 1%;
+		top:.5%;
+		background-color: #F5F5F5;
+	}
+	#dicas li{
+		margin:1px;
+	}
+	@media only screen and (max-width:639px){
+		#dicas{
+			overflow:unset;
+			height:auto;
+			margin:auto;
+			width:95%;
+			position: left;
+		}
+	}
+	html, body{
+		margin: 1px;
+		padding:0;
+		background-color: #288080;
+	}
+	table{
+		width:40%;
+        
+        
+	}
+	table, tr, td{
+		border: 2px solid rgba(70, 255, 230, 0.699);
+		background-color: white;
+	}
+
+	td{
+		font-weight: bold;
+		font-family: monospace;
+		font-size: 2em;
+		color: rgb(0, 0, 0);
+	}
+
+	td:hover{
+		background-color: #006eff;
+		cursor:cell
+	}
+
+	.selecionada, .encontrada, .errado{
+		transition:.2s linear;
+	}
+	.selecionada{
+		background-color: lightblue;
+	}
+	.encontrada{
+		background-color: #009688;
+	}
+
+	.errado{
+		color: red;
+	}
+
+	#iniciar{
+		padding: 6%;
+		background-color: lightgrey;
+	}
+
+	#jogo{
+		text-align: center;
+	}
+
+	#btnPlay{
+		margin:auto;
+		display: block;
+	}
+
+	#parabens{
+		margin: auto;
+		text-align: center;
+		color: #ffa90b;
+		transition: .3s linear 3s;
+		position:absolute;
+		top:20%;
+		left:0;
+		right:0;
+	}
+
+	#btnVoltar{
+		margin: auto;
+	}
+
+	button{
+		border:1px solid rgb(0, 0, 0);
+		outline:none;
+		background-color:lightblue;
+		transition:.2s linear;
+		font-weight:bold;
+		padding:1% 2%;
+		color:white;
+	}
+
+	button:hover{
+		border:1px solid lightblue;
+		outline:none;
+		color:rgb(0, 0, 0)(173, 173);
+		background-color:rgb(48, 138, 255);
+	}
+    
+      
+</style>
+<body>
+<div id="iniciar">
+	<h1>BRINCANDO COM CÉLULAS
+		<P>Clique em "JOGAR" para começar!</P>
+    </h1>
+	<button id="btnPlay">
+		JOGAR
+	</button>
+</div>
+
+<div class="container" ></div>
+<div id="jogo" hidden>
+	<h2 hidden id="parabens">Parabéns!</h2>
+	<button hidden id="btnVoltar">voltar</button>
+	<h2>ACHE AS PALAVRAS </h2>
+    <p>ATENÇÂO COM AS DICAS</p>
+	<p id="encontradas"></p>
+	<ol id="dicas">
+        <h4 style="text-align:center;">Como jogar?</h4>
+        <p>Após achar a palavra, deverá clicar na primeira letra da palavra e em seguida clicar na letra final</p>
+		<h5 style="text-align:center;">DICAS</h5>
+		<li>São responsáveis pelo processo de síntese proteica.</li></br>
+		<li>É uma estrutura encontrada em todas as células existentes.</li></br>
+		<li>Organelas celulares presentes praticamente em todas as células eucarióticas e responsáveis pelo processo de respiração celular.</li></br>
+		<li>Organelas citoplasmáticas localizadas nas proximidades do núcleo, dispostos aos pares e perpendicularmente um do outro.</li></br>
+		<li>É uma organela encontrada nas células eucarióticas, caracterizada por ser um conjunto de vesículas achatadas dispostas em uma pilha.</li></br>
+		<li>Produção de lipídios e proteínas que ocorre na membrana dessas organelas.</li></br>
+		<li>Estrutura de forma esférica que existe no núcleo das células eucarióticas.</li></br>
+		<li>É a região da célula onde se encontra o material genético (DNA) dos organismos eucariontes, tanto unicelulares como pluricelulares</li></br>
+		<li>Tem como função manutenção da célula, formação do fuso mitótico, formação e movimentação de cílios e flagelos e o movimento das organelas celulares e dos cromossomos durante o processo de mitose.</li></br>
+		<li>Atuam na digestão intracelular, ajudando, por exemplo, na degradação das moléculas captadas pelas células.</li></br>
+		<li>É uma região da célula localizada entre o núcleo e a membrana plasmática</li></br>
+		<li>São estruturas, relacionadas com a síntese proteica, que ocorrem em todos os tipos celulares, até mesmo em procariontes.</li></br>
+	</ol>
+	<table id="tabuleiro" align="center">
+    <tr>
+        <td>R</td>	
+		<td>I</td>	
+		<td>B</td>	
+		<td>O</td>	
+		<td>S</td>	
+		<td>S</td>	
+		<td>O</td>	
+		<td>M</td>	
+		<td>O</td>	
+		<td>I</td>	
+		<td>L</td>	
+		<td>U</td>
+        <td>A</td>	
+		<td>J</td>	
+		<td>T</td>	
+		<td>X</td>	
+		<td>O</td>
+        <td>L</td>	
+		<td>O</td>	
+		<td>É</td>
+        <td>L</td>	
+		<td>C</td>	
+		<td>U</td>	
+		<td>N</td>	
+		<td>P</td>
+	</tr> 	
+    <td>P</td>	
+    <td>I</td>	
+    <td>L</td>	
+    <td>Y</td>	
+    <td>N</td>	
+    <td>A</td>	
+    <td>Q</td>	
+    <td>K</td>	
+    <td>E</td>	
+    <td>W</td>	
+    <td>O</td>	
+    <td>P</td>
+    <td>C</td>	
+    <td>D</td>	
+    <td>L</td>	
+    <td>Ç</td>	
+    <td>Á</td>
+    <td>U</td>	
+    <td>G</td>	
+    <td>F</td>
+    <td>S</td>	
+    <td>J</td>	
+    <td>B</td>	
+    <td>Ç</td>	
+    <td>A</td>
+</tr> 	
+<td>T</td>	
+<td>C</td>	
+<td>I</td>	
+<td>T</td>	
+<td>O</td>	
+<td>P</td>	
+<td>L</td>	
+<td>A</td>	
+<td>S</td>	
+<td>M</td>	
+<td>A</td>	
+<td>M</td>
+<td>I</td>	
+<td>C</td>	
+<td>R</td>	
+<td>O</td>	
+<td>T</td>
+<td>Ú</td>	
+<td>B</td>	
+<td>U</td>
+<td>L</td>	
+<td>O</td>	
+<td>S</td>	
+<td>X</td>	
+<td>O</td>
+</tr> 	
+<td>P</td>	
+<td>A</td>	
+<td>S</td>	
+<td>Q</td>	
+<td>C</td>	
+<td>E</td>	
+<td>N</td>	
+<td>T</td>	
+<td>R</td>	
+<td>Í</td>	
+<td>O</td>	
+<td>L</td>
+<td>O</td>	
+<td>C</td>	
+<td>E</td>	
+<td>T</td>	
+<td>E</td>
+<td>P</td>	
+<td>Ç</td>	
+<td>A</td>
+<td>L</td>	
+<td>E</td>	
+<td>N</td>	
+<td>T</td>	
+<td>X</td>
+</tr> 
+<td>P</td>	
+<td>P</td>	
+<td>O</td>	
+<td>Ç</td>	
+<td>A</td>	
+<td>L</td>	
+<td>Y</td>	
+<td>M</td>	
+<td>I</td>	
+<td>T</td>	
+<td>O</td>	
+<td>C</td>
+<td>Ô</td>	
+<td>N</td>	
+<td>D</td>	
+<td>R</td>	
+<td>I</td>
+<td>A</td>	
+<td>R</td>	
+<td>O</td>
+<td>E</td>	
+<td>L</td>	
+<td>C</td>	
+<td>Ú</td>	
+<td>N</td>
+</tr> 
+<td>Y</td>	
+<td>N</td>	
+<td>S</td>	
+<td>R</td>	
+<td>E</td>	
+<td>T</td>	
+<td>Í</td>	
+<td>C</td>	
+<td>U</td>	
+<td>L</td>	
+<td>O</td>	
+<td>E</td>
+<td>N</td>	
+<td>D</td>	
+<td>O</td>	
+<td>P</td>	
+<td>L</td>
+<td>A</td>	
+<td>S</td>	
+<td>M</td>
+<td>A</td>	
+<td>T</td>	
+<td>I</td>	
+<td>C</td>	
+<td>O</td>
+</tr> 
+<td>P</td>	
+<td>I</td>	
+<td>S</td>	
+<td>M</td>	
+<td>E</td>	
+<td>M</td>	
+<td>B</td>	
+<td>R</td>	
+<td>A</td>	
+<td>N</td>	
+<td>A</td>	
+<td>P</td>
+<td>L</td>	
+<td>A</td>	
+<td>S</td>	
+<td>M</td>	
+<td>Á</td>
+<td>T</td>	
+<td>I</td>	
+<td>C</td>
+<td>A</td>	
+<td>W</td>	
+<td>Ç</td>	
+<td>A</td>	
+<td>E</td>
+</tr> 
+<td>E</td>	
+<td>U</td>	
+<td>O</td>	
+<td>T</td>	
+<td>E</td>	
+<td>X</td>	
+<td>Y</td>	
+<td>E</td>	
+<td>P</td>	
+<td>A</td>	
+<td>M</td>	
+<td>T</td>
+<td>S</td>	
+<td>G</td>	
+<td>T</td>	
+<td>A</td>	
+<td>K</td>
+<td>L</td>	
+<td>C</td>	
+<td>K</td>
+<td>Q</td>	
+<td>A</td>	
+<td>S</td>	
+<td>S</td>	
+<td>P</td>
+</tr> 
+<td>Y</td>	
+<td>E</td>	
+<td>M</td>	
+<td>Ç</td>	
+<td>Ã</td>	
+<td>É</td>	
+<td>V</td>	
+<td>Q</td>	
+<td>N</td>	
+<td>Z</td>	
+<td>O</td>	
+<td>Í</td>
+<td>A</td>	
+<td>S</td>	
+<td>A</td>	
+<td>U</td>	
+<td>R</td>
+<td>E</td>	
+<td>O</td>	
+<td>Q</td>
+<td>U</td>	
+<td>K</td>	
+<td>A</td>	
+<td>Z</td>	
+<td>U</td>
+</tr> 
+<tr>	
+<td>I</td>	
+<td>C</td>	
+<td>O</td>	
+<td>M</td>	
+<td>P</td>	
+<td>L</td>	
+<td>E</td>	
+<td>X</td>	
+<td>O</td>	
+<td>G</td>	
+<td>O</td>	
+<td>L</td>
+<td>G</td>	
+<td>I</td>	
+<td>E</td>	
+<td>N</td>	
+<td>S</td>
+<td>E</td>	
+<td>Ã</td>	
+<td>O</td>
+<td>B</td>	
+<td>T</td>	
+<td>S</td>	
+<td>S</td>	
+<td>T</td>
+	</tr> 
+</div>
+<script>
+		var t = document.getElementById("tabuleiro");
+		var celulas, primeiroclique, encontradas, data;
+		function clique(e){
+			if(celulas.length > 0){
+				if(primeiroclique == false){
+					data.colunainicial = parseInt(e.target.dataset.index);
+					data.linhainicial = parseInt(e.target.parentElement.dataset.index);
+					data.letrainicial = e.target.innerText;
+					
+					if(e.target.dataset.encontrada == "true"){
+						e.target.classList.replace("encontrada", "selecionada");
+					}else{
+						e.target.classList.add("selecionada");
+					}
+					
+					primeiroclique = true;
+				}else{
+					if(data.colunainicial != parseInt(e.target.dataset.index) && data.linhainicial != parseInt(e.target.parentElement.dataset.index)){
+						return;
+					}
+					
+					data.colunafinal = parseInt(e.target.dataset.index);
+					data.linhafinal = parseInt(e.target.parentElement.dataset.index);
+					data.letrafinal = e.target.innerText;
+					
+					if(data.colunainicial > data.colunafinal){
+						var novacolunainicial = data.colunafinal;
+						var novacolunafinal = data.colunainicial;
+						data.colunainicial = novacolunainicial;
+						data.colunafinal = novacolunafinal;
+					}
+					if(data.linhainicial > data.linhafinal){
+						var novalinhainicial = data.linhafinal;
+						var novalinhafinal = data.linhainicial;
+						data.linhainicial = novalinhainicial;
+						data.linhafinal = novalinhafinal;
+					}
+					
+					primeiroclique = false;
+					
+					if(e.target.dataset.encontrada == "true"){
+						e.target.classList.replace("encontrada", "selecionada");
+					}else{
+						e.target.classList.add("selecionada");
+					}
+					comparar(data);
+				}
+			}
+		}
+		function horizontal(fn){
+			console.log("seleção horizontal");
+			for(var i = data.colunainicial; i < data.colunafinal + 1; i++){
+				var td = t.rows[data.linhainicial].cells[i];
+				if(td.dataset.encontrada == "true"){
+					td.classList.replace("encontrada", "selecionada");
+				}else{
+					td.classList.add("selecionada");
+				}
+				fn(td);
+			}
+		}
+		function vertical(fn){
+			console.log("seleção vertical");
+			for(var i = data.linhainicial; i < data.linhafinal + 1; i++){
+				var td = t.rows[i].cells[data.colunainicial];
+				if(td.dataset.encontrada == "true"){
+					td.classList.replace("encontrada", "selecionada");
+				}else{
+					td.classList.add("selecionada");
+				}
+				fn(td);
+			}
+		}
+		function comparar(data){
+			var selecionados = {
+				palavra:"",
+				elementos:[]
+			};
+			if(data.colunainicial != data.colunafinal && data.linhainicial == data.linhafinal){
+				horizontal(function(td){
+					selecionados.palavra += td.innerText;
+					selecionados.elementos.push(td);
+				});
+			}else if(data.colunainicial == data.colunafinal && data.linhainicial != data.linhafinal){
+				vertical(function(td){
+					selecionados.palavra += td.innerText;
+					selecionados.elementos.push(td);
+				});
+			}
+			
+			var palavraselecionada = celulas.includes(selecionados.palavra) ? selecionados.palavra : celulas.includes(selecionados.palavra.split("").reverse().join("")) ? selecionados.palavra.split("").reverse().join('') : false;
+			if(palavraselecionada){
+				celulas = celulas.filter(function(p){
+					if(palavraselecionada != p){
+						return p;
+					}
+				});
+				setTimeout(function(){
+					for(var i = 0; i < selecionados.elementos.length; i++){
+						var elemento = selecionados.elementos[i];
+						elemento.classList.replace("selecionada", "encontrada");
+						elemento.dataset.encontrada = "true";
+					}
+				}, 1000);
+				encontradas += 1;
+				document.getElementById("encontradas").innerText = "Encontradas: "+encontradas+"\n Restantes: "+ celulas.length;
+				if(celulas.length == 0){
+					setTimeout(function(){
+						document.getElementById("parabens").hidden = false;
+						document.getElementById("btnVoltar").hidden = false;
+					}, 2000);
+				}
+				data = {};
+			}else{
+				data = {};
+				setTimeout(function(){
+					for(var i = 0; i < selecionados.elementos.length; i++){
+						var elemento = selecionados.elementos[i];
+						elemento.classList.replace("selecionada", "errado");
+					}
+					setTimeout(function(){
+						for(var i = 0; i < selecionados.elementos.length; i++){
+							var elemento = selecionados.elementos[i];
+							if(elemento.dataset.encontrada == "true"){
+								elemento.classList.replace("errado", "encontrada");
+							}else{
+								elemento.classList.remove("errado");
+							}
+						}
+					}, 1000);
+				}, 1000);
+			}
+		}
+		
+function iniciaJogo(){
+			celulas=["RIBOSSOMO", "CITOPLASMA","LISOSSOMO", "MICROTÚBULOS","NÚCLEO", "NUCLÉOLO","RETÍCULOENDOPLASMATICO", "COMPLEXOGOLGIENSE", "CENTRÍOLO", "MITOCÔNDRIA", "MEMBRANAPLASMÁTICA"];
+			primeiroclique = false;
+			encontradas = 0;
+			data = {};
+			document.getElementById("encontradas").innerText = "Encontradas: "+encontradas+"\n Restantes: "+ celulas.length;
+			for(var i = 0; i < t.rows.length; i++){
+				t.rows[i].id = "linha " + i;
+				t.rows[i].dataset.index = i;
+				for(var j = 0; j < t.rows[i].cells.length; j++){
+					t.rows[i].cells[j].classList = [];
+					t.rows[i].cells[j].dataset.encontrada = "false";
+					t.rows[i].cells[j].id = "coluna " + j;
+					t.rows[i].cells[j].dataset.index = j;
+					t.rows[i].cells[j].addEventListener("click", clique);
+				}
+			}
+			document.getElementById("iniciar").hidden = true;
+			document.getElementById("parabens").hidden = true;
+			document.getElementById("jogo").hidden = false;
+			document.getElementById("btnVoltar").hidden = true;
+		}
+		var btnPlay = document.getElementById("btnPlay");
+		btnPlay.onclick = function(){
+			iniciaJogo();
+		}
+		var btnVoltar = document.getElementById("btnVoltar");
+		btnVoltar.onclick = function(){
+			btnVoltar.hidden = true;
+			document.getElementById("iniciar").hidden = false;
+			document.getElementById("parabens").hidden = true;
+			document.getElementById("jogo").hidden = true;
+		}
+	</script>
+</body>
+
+</html>

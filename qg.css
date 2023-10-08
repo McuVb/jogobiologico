@@ -1,0 +1,41 @@
+body{
+    background-color: #a593fa;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+ 
+    
+}
+h1{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 110px;
+    text-align: center;
+}
+h2{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 20px;
+    text-align: center;
+}
+.container{
+    text-align: center;
+}
+
+.botao1 {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: #5e5b9f; 
+    background-size: 230px;
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-size: 20px;
+    color: #ffd9f4;
+}
+.botao2 {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: #282b4c ; 
+    background-size: 230px;
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-size: 20px;
+    color: #ffd9f4;
+}
